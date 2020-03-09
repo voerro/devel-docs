@@ -36,4 +36,4 @@ public function show(News $news)
 
 As a result, the `show()` action's page title will be `What happend? Let\'s find out! - News`.
 
-Read more about meta tags in the [SEO](seo.md) section.
+Read more about meta tags in the [SEO](/seo/) section.

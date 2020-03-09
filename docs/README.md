@@ -1,6 +1,4 @@
-# Devel Documentation
-
-## About Devel
+# About Devel
 
 Devel is a modular Laravel platform which comes with an admin dashboard, a CRUD generator and a bunch of other useful tools. It is meant to make the life of developers a bit easier.
 

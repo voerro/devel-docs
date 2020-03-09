@@ -1,4 +1,4 @@
-# Settings
+# Settings Storage
 
 Devel comes with a simple key-value database storage for storing various site and module settings. The `Settings` class is located in the `Devel\Core\Entities` namespace.
 

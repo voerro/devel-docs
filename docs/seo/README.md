@@ -4,7 +4,7 @@ Devel gives you useful tools for setting HTML meta tags for your pages.
 
 ## Setting Meta Tags in Controllers
 
-This is described in the [Devel Controller](controller.md?id=setsmetatags-trait) section.
+This is described in the [Devel Controller](/controller/) section.
 
 ## Setting Meta Tags Elsewhere
 
@@ -53,6 +53,6 @@ It is already included in the `Modules/Main/Resources/views/public/layout.blade.
 ## Supported Meta Tags
 
 The supported tags are:
-- `title` -> '<title>',
-- `description` -> '<meta name="description">',
-- `keywords` -> '<meta name="keywords">',
+- `title` -> `<title>`
+- `description` -> `<meta name="description">`
+- `keywords` -> `<meta name="keywords">`
