@@ -2,8 +2,6 @@
 
 Devel is a modular Laravel platform which comes with an admin dashboard, a CRUD generator and a bunch of other useful tools. It is meant to make the life of developers a bit easier.
 
-The source code is available on [GitHub](https://github.com/voerro/devel).
-
 ## Project Status
 
 **NOT READY TO BE USED!** The project is in its early development stage. The dashboard/CRUD is incomplete and there are no any ready-to-use modules yet. Besides, breaking changes are made all the time.
