@@ -23,5 +23,14 @@ module.exports = {
             ['model/', 'Devel Model'],
             ['seo/', 'SEO'],
         ],
-    }
+    },
+
+    plugins: [
+        [
+            '@vuepress/google-analytics',
+            {
+                'ga': '' // UA-00000000-0
+            }
+        ]
+    ],
 }
