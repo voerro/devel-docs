@@ -21,6 +21,7 @@ module.exports = {
             ['settings-storage/', 'Settings Storage'],
             ['controller/', 'Devel Controller'],
             ['model/', 'Devel Model'],
+            ['seeder/', 'Devel Seeder'],
             ['seo/', 'SEO'],
         ],
     },

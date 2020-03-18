@@ -44,7 +44,7 @@ The `Config/config.php` is going to be used by Devel and you when developing you
 - `display_name` - will be displayed in the dashboard's sidebar and the module's dashboard pages
 - `slug` - will be used in the dashboard as your module's routes prefix
 
-## Installing Modules
+## Installing & Uninstalling Modules
 
 Your new module won't be listed and enabled by default. The same is true for when you download an existing module. To install a module, run the following command:
 
@@ -62,6 +62,14 @@ This is what this command does internally (in the correct order):
 
 If you're in the active development stage, you can run any of those command manually at any time.
 
+If you want to uninstall a module, simply run the following command:
+
+```bash
+php artisan devel:module:uninstall ModuleName
+```
+
+The module files won't be deleted, but its migrations and the seeded data will be rolled back. This way you'll be able to re-install the module whenever you need to. If you don't want to lose any data you should disable the module instead.
+
 ## Enabling & Disabling Modules
 
 Modules can be disabled in the admin dashboard. By default only root users have the permission to do so (including the default root user).
@@ -77,9 +85,9 @@ Don't ever disable the `Main` module, unless you really know what you're doing.
 
 ## Developing Modules
 
-The process of developing modules is pretty much the same as the process of developing a typical Laravel app. The only difference is that with modules it's you've got a bunch of small Laravel projects in one app. Any additional instructions are unnecesary.
+The process of developing modules is pretty much the same as the process of developing a typical Laravel app. The difference is that with modules it's like you've got a bunch of small Laravel apps in one project, each of which can be used in many projects.
 
-There is a bunch of additional `artisan` commands to operate upon modules:
+There is a bunch of additional `artisan` commands which pretty much mimic the default Laravel commands, except they work within the scope of a module:
 - `module:make-command [command-name] [module-name]` - create a new artisan/console command for the specified module
 - `module:make-controller [controller-name] [module-name]` - create a new controller for the specified module
 - `module:make-crud [full-model-class-name] [module-name]` - generate CRUD for the specified model inside the specified module
@@ -109,6 +117,7 @@ There is a bunch of additional `artisan` commands to operate upon modules:
 - `module:publish-migration [module-name]` - pulish the specified module's migration (**CURRENTLY NOT GUARANTEED TO WORK**)
 - `module:publish-translation [module-name]` - pulish the specified module's translation (**CURRENTLY NOT GUARANTEED TO WORK**)
 - `module:seed [module-name]` - seed the specified module
+- `module:unseed [module-name]` - unseed the specified module. Calls the optional `revert()` method of each seeder.
 
 **Note:** the standard `php artisan migrate` command also migrates all the enabled modules.
 
