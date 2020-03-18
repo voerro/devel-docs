@@ -83,6 +83,33 @@ php artisan module:disable ModuleName
 
 Don't ever disable the `Main` module, unless you really know what you're doing.
 
+## Downloading Modules from Packagist
+
+You can download Devel modules from `Packagist` (`composer` package repository). To download a package run:
+
+```bash
+php artisan module:download vendor/module-package-name specific-version
+```
+
+The `version` argument is optional.
+
+Please use this command and not `composer require` directly to avoid possible errors.
+
+After downloading, you will need to [install](#installing-uninstalling-modules) the module.
+
+You can try this out with the `Dummy` module which add a dummy page to the admin dashboard:
+
+```bash
+php artisan module:download devel/dummy-module
+php artisan devel:module:install Dummy
+```
+
+## Removing Modules
+
+If you want to completely remove a module from your project, do the following:
+- If you installed the module via `php artisan module:download` - remove it as any composer package by running `composer remove vendor/module-package-name`
+- Otherwise just manually delete the module's folder from the `Modules` directory 
+
 ## Developing Modules
 
 The process of developing modules is pretty much the same as the process of developing a typical Laravel app. The difference is that with modules it's like you've got a bunch of small Laravel apps in one project, each of which can be used in many projects.
@@ -122,3 +149,17 @@ There is a bunch of additional `artisan` commands which pretty much mimic the de
 **Note:** the standard `php artisan migrate` command also migrates all the enabled modules.
 
 Keep reading to learn about all the Devel utilities that will make your development process faster and more enjoyable.
+
+## Distributing Modules via Packagist
+
+Devel modules can be distributed via `Packagist` (`composer` package repository) just like any other PHP packages. The only difference is insdie the module's `composer.json`.
+
+The `type` should be set to `devel-module`.
+
+The `name` should be set with the accordance to your actual module's name. For example, your module's name is `SomeModule`. Make it lower case, use dashes to separate words, i.e. `some-module`. Prefix this with your vendor name, i.e. `vendor/some-module` (Packagist requires this). Finally, add `-devel-module` at the end (this is not required but is encouraged to make things more clear). Final result:
+
+```
+devel/some-name-devel-module
+```
+
+Now, whenever someone installs your module, it will be installed under `Modules/SomeModule`. Again, this is important that `SomeModule` is what you have set as the name inside your module's `module.json` and your module's config file.
