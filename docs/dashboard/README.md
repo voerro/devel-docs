@@ -62,7 +62,11 @@ Your views should extend the DevelDashboard layout. A typical dashboard view sho
 
 This is where things get interesting! Devel comes with a dashboard CRUD generator. It generates both backend and frontend scaffolding for a Model.
 
-To generate CRUD for an existing model and module, run `php artisan module:make-crud [full-model-class-name] [module-name]`.
+To generate CRUD for an existing model and module, run:
+
+```bash
+php artisan module:make-crud [full-model-class-name] [module-name]
+```
 
 To generate CRUD for an existing model upon module generation, simply add a `--module=` argument with the full model class name when calling `php artisan module:make`.
 
@@ -75,7 +79,7 @@ php artisan module:make DummyUsers --name='Dummy Users' --model='Devel\Core\Enti
 Then install the module:
 
 ```bash
-php artisan devel:module:install DummyUsers
+php artisan module:install DummyUsers
 ```
 
 Now we can examine the generated files.

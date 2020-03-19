@@ -6,6 +6,27 @@ Modules are a way to better structure your projects. A module is basically a reu
 
 The modularity was achieved with the help of the [nWidart/laravel-modules](https://github.com/nWidart/laravel-modules) package, which was modified to the needs of Devel and included as a part of the core (not as a composer package).
 
+## Listing Modules
+
+You can see all the modules your project has available by running:
+
+```bash
+php artisan module:list
+```
+
+You can sort the list by the order in which modules are loaded:
+
+```bash
+php artisan module:list -o ordered
+php artisan module:list -o ordered -d desc
+```
+
+The second command gives you a reversed order. The `-o` argument can take other values:
+- `installed` - all the installed modules
+- `uninstalled` - all the uninstalled modules (the module's folder is there but it is not installed)
+- `enabled` - all the enabled modules
+- `disabled` - all the disabled modules
+
 ## Creating Modules
 
 To create a new module, run the following command:
@@ -49,7 +70,7 @@ The `Config/config.php` is going to be used by Devel and you when developing you
 Your new module won't be listed and enabled by default. The same is true for when you download an existing module. To install a module, run the following command:
 
 ```bash
-php artisan devel:module:install ModuleName
+php artisan module:install ModuleName
 ```
 
 This is what this command does internally (in the correct order):
@@ -65,7 +86,7 @@ If you're in the active development stage, you can run any of those command manu
 If you want to uninstall a module, simply run the following command:
 
 ```bash
-php artisan devel:module:uninstall ModuleName
+php artisan module:uninstall ModuleName
 ```
 
 The module files won't be deleted, but its migrations and the seeded data will be rolled back. This way you'll be able to re-install the module whenever you need to. If you don't want to lose any data you should disable the module instead.
@@ -101,14 +122,24 @@ You can try this out with the `Dummy` module which add a dummy page to the admin
 
 ```bash
 php artisan module:download devel/dummy-module
-php artisan devel:module:install Dummy
+php artisan module:install Dummy
 ```
 
 ## Removing Modules
 
-If you want to completely remove a module from your project, do the following:
-- If you installed the module via `php artisan module:download` - remove it as any composer package by running `composer remove vendor/module-package-name`
-- Otherwise just manually delete the module's folder from the `Modules` directory 
+Sometimes you want to completely remove a module from your project.
+
+If you installed the module via `php artisan module:download` - remove it as a composer package:
+
+```bash
+composer remove vendor/module-package-name
+```
+
+Otherwise run:
+
+```bash
+php artisan module:delete ModuleName
+```
 
 ## Developing Modules
 
@@ -117,9 +148,10 @@ The process of developing modules is pretty much the same as the process of deve
 There is a bunch of additional `artisan` commands which pretty much mimic the default Laravel commands, except they work within the scope of a module:
 - `module:make-command [command-name] [module-name]` - create a new artisan/console command for the specified module
 - `module:make-controller [controller-name] [module-name]` - create a new controller for the specified module
-- `module:make-crud [full-model-class-name] [module-name]` - generate CRUD for the specified model inside the specified module
+- `module:make-crud [full-model-class-name] [module-name]` - scaffold admin dashboard CRUD for a model inside the specified module. More about this in the [CRUD & CRUD Generation](/dashboard/#crud-crud-generation) section.
 - `module:make-event [event-name] [module-name]` - create a new event for the specified module
 - `module:make-factory [factory-name] [module-name]` - create a new factory for the specified module
+- `module:make-job [job-name] [module-name]` - create a new job for the specified module
 - `module:make-listener [listener-name] [module-name]` - create a new listener for the specified module
 - `module:make-mail [mail-name] [module-name]` - create a new mail for the specified module
 - `module:make-middleware [middleware-name] [module-name]` - create a new middleware for the specified module
@@ -128,10 +160,9 @@ There is a bunch of additional `artisan` commands which pretty much mimic the de
 - `module:make-notification [notification-name] [module-name]` - create a new notification for the specified module
 - `module:make-policy [policy-name] [module-name]` - create a new policy for the specified module
 - `module:make-provider [provider-name] [module-name]` - create a new service provider for the specified module
-- `module:make-request [request-name] [module-name]` - create a new form request for the specified module
-- `module:make-request [request-name] [module-name]` - create a new request for the specified module
-- `module:make-resource [resource-name] [module-name]` - create a new resource for the specified module
-- `module:make-rule [rule-name] [module-name]` - create a new rule for the specified module
+- `module:make-request [request-name] [module-name] [full-model-class-name]` - create a new form request for the specified module. If a model is specified - some default rules will be generated for you.
+- `module:make-resource [resource-name] [module-name]` - create a new API resource for the specified module
+- `module:make-rule [rule-name] [module-name]` - create a new validation rule for the specified module
 - `module:make-seed [seed-name] [module-name]` - create a new seed for the specified module
 - `module:make-test [test-name] [module-name]` - create a new test for the specified module
 - `module:migrate [module-name]` - run migrations for the specified module
@@ -140,9 +171,9 @@ There is a bunch of additional `artisan` commands which pretty much mimic the de
 - `module:migrate-rollback [module-name]` - rollback migrations for the specified module
 - `module:migrate-status [module-name]` - get migrations status for the specified module
 - `module:publish [module-name]` - pulish all the specified module's publishables
-- `module:publish-config [module-name]` - pulish the specified module's config
-- `module:publish-migration [module-name]` - pulish the specified module's migration (**CURRENTLY NOT GUARANTEED TO WORK**)
-- `module:publish-translation [module-name]` - pulish the specified module's translation (**CURRENTLY NOT GUARANTEED TO WORK**)
+- `module:publish-config [module-name]` - pulish the specified module's config. Will be published to the default Laravel config folder.
+- `module:publish-migration [module-name]` - pulish the specified module's migration. Will be published to the `Main` module migrations folder.
+- `module:publish-translation [module-name]` - pulish the specified module's translation. Will be published to the default Laravel translations folder.
 - `module:seed [module-name]` - seed the specified module
 - `module:unseed [module-name]` - unseed the specified module. Calls the optional `revert()` method of each seeder.
 
