@@ -82,7 +82,14 @@ Then install the module:
 php artisan module:install DummyUsers
 ```
 
-Now we can examine the generated files.
+What exactly gets generated:
+- A CRUD controller
+- CRUD dashboard routes
+- CRUD views
+- A simple PHPUnit CRUD feature test
+- A model factory for your CRUD's model (if it doesn't exist yet)
+
+Read further to learn how the CRUD itself works and how to customize it.
 
 ### The Backend
 
@@ -152,15 +159,25 @@ $this->setForm([
 
 Available field types and their required attributes:
 - `text` - a simple `<input type="text">` input
+    - `placeholder` - (optional) specify a placeholder text
 - `email` - a simple `<input type="email">` input
+    - `placeholder` - (optional) specify a placeholder text
+- `number` - a simple `<input type="number">` input
+    - `placeholder` - (optional) specify a placeholder text
 - `password` - a simple `<input type="password">` input
+    - `placeholder` - (optional) specify a placeholder text
 - `hidden` - a simple `<input type="hidden">` input
+- `color` - a simple `<input type="color">` input
+- `range` - a simple `<input type="range">` input
 - `checkbox` - a checkbox
 - `switch` - a switch-looking checkbox
 - `select` - a select. Additional attrs:
     - `idField` - the name of the field to be used for the select options value
     - `textField` - the name of the field to be used for the select options text
-    - `multipleChoice` - boolean, determines whether the select is a multiple choice select
+    - `multipleChoice` - (optional) boolean, determines whether the select is a multiple choice select
+    - `collection` - (optional) specify a custom options [collection](#the-action-methods) name. The default value is the field `name`.
+    - `placeholder` - (optional) specify a placeholder text
+    - `required` - (optional) specify whether a value must be selected (only for the single choice selects). The default is `false`.
 - `link` - a simple `<a>` link element. Additional attrs:
     - `url` - the `<a>`'s `href` value.
 
@@ -168,7 +185,19 @@ The data that we set here will be passed to the form Vue component in the `_form
 
 #### The Action Methods
 
-The controller has 3 actions methods: `index`, `create` and `edit`. We won't go into details with these methods since they are pretty straightforward. You will notice certain relations were made available for editing automatically.
+The controller has 3 actions methods: `index`, `create` and `edit`. We won't go into details with these methods since they are pretty straightforward.
+
+You will notice certain relations were made available for editing automatically. If you have select inputs on your form, you need to add a list of available options (a collection) for each input to the view data, for example:
+
+```php
+return view('develusers::dashboard.users.create', [
+    'form' => $this->form(),
+    'collections' => [
+        // This collection of roles, will be used to populate the "roles" select
+        'roles' => Role::all(),
+    ],
+]);
+```
 
 The `store`, `update` and `destroy` are hidden in the `Crud` trait.
 
